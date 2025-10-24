@@ -13,7 +13,7 @@ import {
 import { link as linkStyles } from "@heroui/theme";
 import clsx from "clsx";
 
-import { siteConfig } from "@/config/site";
+import { siteConfig } from "@/config/routes";
 import { ThemeSwitch } from "@/components/ThemeSwitch";
 import { SearchIcon } from "@/components/Iconss";
 import { Logo } from "@/components/Iconss";
