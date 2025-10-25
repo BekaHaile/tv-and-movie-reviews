@@ -5,6 +5,7 @@ export const routes = {
   about: "/about",
   category: "/category/:categorySlug",
   notFound: "/404",
+  show: "/show/:showId",
 };
 
 export const siteConfig = {
