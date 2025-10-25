@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 // icons
-import { Loader2, Star, PlusCircle } from "lucide-react";
+import { Star, PlusCircle } from "lucide-react";
 import { Button } from "@heroui/button";
 import { Modal, ModalBody, ModalContent, ModalHeader } from "@heroui/modal";
 
@@ -10,6 +10,7 @@ import { useGetShow } from "@/hooks/useGetShow";
 // components
 import { ReviewList } from "@/components/ReviewList";
 import { ReviewForm } from "@/components/ReviewForm";
+import { LoadingFallback } from "@/components/LoadingFallback";
 
 export const ShowPage = () => {
   const { showId } = useParams();
@@ -19,12 +20,7 @@ export const ShowPage = () => {
   const handleAddReviewClick = () => setAddReviewOpen(true);
   const handleClose = () => setAddReviewOpen(false);
 
-  if (isLoading)
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <Loader2 className="w-8 h-8 animate-spin text-indigo-600 dark:text-indigo-400" />
-      </div>
-    );
+  if (isLoading) return <LoadingFallback />;
 
   if (isError || !data)
     return (
@@ -36,7 +32,7 @@ export const ShowPage = () => {
   const { title, description, thumbnail_src, tmdb_rating, reviews } = data;
 
   return (
-    <div className="container mx-auto px-4 py-8 space-y-10 text-gray-800 dark:text-gray-100 transition-colors">
+    <div className="container mx-auto px-4 py-4 space-y-10 text-gray-800 dark:text-gray-100 transition-colors">
       {/* --- Show Header Section --- */}
       <div className="flex flex-col md:flex-row gap-6">
         <img
@@ -52,7 +48,7 @@ export const ShowPage = () => {
 
           <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
             <Star className="w-5 h-5 text-yellow-500 dark:text-yellow-400" />
-            {tmdb_rating}/10
+            {tmdb_rating}/5
           </div>
 
           <p className="text-gray-700 dark:text-gray-300">{description}</p>

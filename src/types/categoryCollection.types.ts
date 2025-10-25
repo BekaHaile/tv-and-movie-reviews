@@ -26,3 +26,7 @@ export type CategoryCollection = {
   slug: string;
   categories: CategoryCollectionCategory[];
 };
+
+export type CategoryFilterInputs = {
+  search?: string;
+};

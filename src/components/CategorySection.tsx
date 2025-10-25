@@ -28,15 +28,18 @@ export const CategorySection = ({
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-        {shows.map((show) => (
-          <ShowCard
-            key={show.id}
-            id={show.id}
-            rating={show.tmdb_rating}
-            thumbnail={show.thumbnail_src}
-            title={show.title}
-          />
-        ))}
+        {shows
+          // Filter out any shows that are missing required fields
+          ?.filter((show) => show?.id && show?.title)
+          .map((show) => (
+            <ShowCard
+              key={show?.id}
+              id={show?.id}
+              rating={show?.tmdb_rating}
+              thumbnail={show?.thumbnail_src}
+              title={show?.title}
+            />
+          ))}
       </div>
     </section>
   );

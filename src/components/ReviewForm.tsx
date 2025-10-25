@@ -71,14 +71,14 @@ export const ReviewForm = ({ showId, onSuccess }: ReviewFormProps) => {
           className="block text-sm text-gray-600 dark:text-gray-400"
           htmlFor="rating"
         >
-          Rating (1–10):
+          Rating (1–5):
         </label>
         <input
           required
           className="w-20 p-2 rounded border border-gray-300 dark:border-gray-700
         bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100"
           id="rating"
-          max="10"
+          max="5"
           min="1"
           name="rating"
           type="number"
