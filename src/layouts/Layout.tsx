@@ -11,7 +11,7 @@ export default function Layout() {
   return (
     <div className="relative flex flex-col h-screen">
       <Navbar />
-      <main className="container mx-auto max-w-7xl px-6 flex-grow pt-8">
+      <main className="container mx-auto max-w-8xl px-6 flex-grow pt-8">
         <Suspense fallback={<Spinner />}>
           <Outlet />
         </Suspense>

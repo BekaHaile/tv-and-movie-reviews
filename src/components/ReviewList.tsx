@@ -12,11 +12,11 @@ export const ReviewList = ({ reviews }: { reviews: Review[] }) => {
     );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 md:grid-cols-2 lg:grid-cols-2 grid gap-6">
       {reviews.map((r) => (
         <div
           key={r.id}
-          className="bg-white dark:bg-gray-800 rounded-xl shadow-md dark:shadow-gray-900/40 p-5 transition-colors"
+          className="bg-white dark:bg-gray-800 rounded-xl shadow-md dark:shadow-gray-900/40 p-5 transition-colors m-0"
         >
           <div className="flex justify-between items-start mb-2">
             <div>
@@ -42,7 +42,7 @@ export const ReviewList = ({ reviews }: { reviews: Review[] }) => {
             <div className="flex items-center gap-1">
               <Star className="w-4 h-4 text-yellow-500 dark:text-yellow-400" />
               <span className="text-sm text-gray-700 dark:text-gray-300">
-                {r.rating}/5
+                {r.rating}/10
               </span>
             </div>
           </div>
