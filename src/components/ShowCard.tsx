@@ -11,7 +11,7 @@ interface ShowCardProps {
 export const ShowCard = ({ id, title, rating, thumbnail }: ShowCardProps) => {
   return (
     <Link
-      className="group block bg-white rounded-2xl shadow hover:shadow-lg transition-all overflow-hidden"
+      className="group block bg-white dark:bg-gray-800 rounded-2xl shadow hover:shadow-lg transition-all overflow-hidden"
       to={`/show/${id}`}
     >
       <div className="relative aspect-[3/4] overflow-hidden">
@@ -26,7 +26,7 @@ export const ShowCard = ({ id, title, rating, thumbnail }: ShowCardProps) => {
         </div>
       </div>
       <div className="p-3">
-        <h3 className="font-semibold text-gray-800 group-hover:text-indigo-600 transition-colors">
+        <h3 className="font-semibold text-gray-800 dark:text-gray-100 group-hover:text-indigo-600 group-hover:dark:text-indigo-400 transition-colors">
           {title}
         </h3>
       </div>
