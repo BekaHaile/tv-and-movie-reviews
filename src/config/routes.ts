@@ -4,6 +4,7 @@ export const routes = {
   home: "/",
   about: "/about",
   category: "/category/:categorySlug",
+  notFound: "/404",
 };
 
 export const siteConfig = {
