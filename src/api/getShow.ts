@@ -1,8 +1,11 @@
 // src/api/getShow.ts
 import { apiClient } from "@/config/apiClient.config";
-import { Show } from "@/types/show.types";
+import { Show, ShowFilterInputs } from "@/types/show.types";
 
-export const getShow = async (showId: string): Promise<Show> => {
+export const getShow = async (
+  showId: string,
+  filters: ShowFilterInputs = {}
+): Promise<Show> => {
   const response = await apiClient.get(`/items/show/${showId}`, {
     params: {
       fields: [
@@ -19,6 +22,11 @@ export const getShow = async (showId: string): Promise<Show> => {
         "reviews.rating",
         "reviews.date_created",
       ].join(","),
+      deep: {
+        reviews: {
+          _sort: filters.sortBy ? `-${filters.sortBy}` : "-date_created",
+        },
+      },
     },
   });
 

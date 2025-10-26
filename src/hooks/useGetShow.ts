@@ -1,14 +1,15 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 // api
 import { getShow } from "@/api/getShow";
 // types
-import { Show } from "@/types/show.types";
+import { Show, ShowFilterInputs } from "@/types/show.types";
 
-export const useGetShow = (showId: string) => {
+export const useGetShow = (showId: string, filters: ShowFilterInputs) => {
   return useQuery<Show, Error>({
-    queryKey: ["show", showId],
-    queryFn: () => getShow(showId),
+    queryKey: ["show", showId, filters],
+    queryFn: () => getShow(showId, filters),
     enabled: !!showId,
+    placeholderData: keepPreviousData,
   });
 };

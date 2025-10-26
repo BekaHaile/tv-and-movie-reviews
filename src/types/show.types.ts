@@ -16,3 +16,7 @@ export type Show = {
   release_date?: string;
   reviews?: Review[];
 };
+
+export type ShowFilterInputs = {
+  sortBy?: string;
+};

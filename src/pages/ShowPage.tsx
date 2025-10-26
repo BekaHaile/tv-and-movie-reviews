@@ -10,17 +10,33 @@ import { Image } from "@heroui/image";
 
 // hooks
 import { useGetShow } from "@/hooks/useGetShow";
+import { useUrlFilters } from "@/hooks/useUrlFilters";
 // components
 import { ReviewList } from "@/components/ReviewList";
 import { ReviewForm } from "@/components/ReviewForm";
+import SortButton from "@/components/SortButton";
+// types
+import { ShowFilterInputs } from "@/types/show.types";
+
+const sortOptions = [
+  { value: "date_created", label: "Date" },
+  { value: "rating", label: "Rating" },
+  { value: "name", label: "User Name" },
+];
 
 const ShowPage = () => {
   const { showId } = useParams();
-  const { data, isLoading, isError } = useGetShow(showId!);
+  const { filters, setFilters } = useUrlFilters<ShowFilterInputs>();
+
+  const { data, isLoading, isError } = useGetShow(showId!, filters);
 
   const [addReviewOpen, setAddReviewOpen] = useState(false);
   const handleAddReviewClick = () => setAddReviewOpen(true);
   const handleClose = () => setAddReviewOpen(false);
+
+  const handleSortChange = (value: string) => {
+    setFilters({ ...filters, sortBy: value });
+  };
 
   if (isLoading) return <ShowSkeleton />;
 
@@ -67,15 +83,23 @@ const ShowPage = () => {
             <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
               Reviews
             </h2>
-            <Button
-              className="flex items-center gap-2"
-              color="primary"
-              variant="flat"
-              onClick={handleAddReviewClick}
-            >
-              <PlusCircle className="w-5 h-5" />
-              Add Review
-            </Button>
+            <div className="flex items-center gap-4">
+              <SortButton
+                selected={filters.sortBy || "date"}
+                sortOptions={sortOptions}
+                onChange={handleSortChange}
+              />
+
+              <Button
+                className="flex items-center gap-2"
+                color="primary"
+                variant="flat"
+                onClick={handleAddReviewClick}
+              >
+                <PlusCircle className="w-5 h-5" />
+                Add Review
+              </Button>
+            </div>
           </div>
 
           <ReviewList reviews={reviews ?? []} />
