@@ -12,6 +12,17 @@ export const getCategoryCollection = async (
     filter: {
       slug: { _eq: slug },
     },
+    // Commented out limit for future use
+    // Limit retrieved fields for optimization based on categories.category_id.shows
+    // deep: {
+    //   categories: {
+    //     category_id: {
+    //       shows: {
+    //         _limit: 10,
+    //       },
+    //     },
+    //   },
+    // },
     fields: [
       "id",
       "slug",
