@@ -1,6 +1,6 @@
 import ReactMarkdown from "react-markdown";
 // icons
-import { Star } from "lucide-react";
+import { Star, MessageSquare } from "lucide-react";
 
 // types
 import { Review } from "@/types/show.types";
@@ -8,7 +8,15 @@ import { Review } from "@/types/show.types";
 export const ReviewList = ({ reviews }: { reviews: Review[] }) => {
   if (!reviews.length)
     return (
-      <p className="text-gray-500 dark:text-gray-400 italic">No reviews yet.</p>
+      <div className="flex flex-col items-center justify-center py-8">
+        <MessageSquare
+          className="mb-2 text-gray-400 dark:text-gray-500"
+          size={32}
+        />
+        <p className="text-gray-500 dark:text-gray-400 italic">
+          No reviews yet.
+        </p>
+      </div>
     );
 
   return (

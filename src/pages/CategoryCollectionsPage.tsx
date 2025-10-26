@@ -1,4 +1,6 @@
 import { useParams, Navigate } from "react-router-dom";
+// icons
+import { Search } from "lucide-react";
 
 // components
 import { CategorySection } from "@/components/CategorySection";
@@ -7,7 +9,7 @@ import { useGetCategoryCollection } from "@/hooks/useGetCategoryCollection";
 import { useUrlFilters } from "@/hooks/useUrlFilters";
 // types
 import { CategoryFilterInputs } from "@/types/categoryCollection.types";
-import { LoadingFallback } from "@/components/LoadingFallback";
+import { CategorySkeleton } from "@/components/CategorySkeleton";
 
 interface Props {
   slug?: string;
@@ -24,7 +26,7 @@ const CategoryCollectionPage = ({ slug }: Props) => {
     filters,
   );
 
-  if (isLoading) return <LoadingFallback />;
+  if (isLoading) return <CategorySkeleton />;
 
   const hasFilters = Object.keys(filters).length > 0;
 
@@ -45,8 +47,11 @@ const CategoryCollectionPage = ({ slug }: Props) => {
   if (hasFilters && (!data || !hasShows)) {
     // Show a message indicating that no results were found
     return (
-      <div className="text-center py-20 text-gray-700 dark:text-gray-300">
-        No results found for the applied filters.
+      <div className="flex flex-col items-center justify-center py-20 text-gray-700 dark:text-gray-300">
+        <Search className="mb-4 text-gray-400 dark:text-gray-500" size={48} />
+        <span className="text-lg font-medium">
+          No results found for the applied filters.
+        </span>
       </div>
     );
   }
@@ -56,7 +61,7 @@ const CategoryCollectionPage = ({ slug }: Props) => {
       {data?.categories
         ?.filter(
           // Only include categories that have shows
-          (cat) => cat.category_id?.shows.filter((s) => s.show_id).length > 0
+          (cat) => cat.category_id?.shows.filter((s) => s.show_id).length > 0,
         )
         .map((cat) => (
           <CategorySection

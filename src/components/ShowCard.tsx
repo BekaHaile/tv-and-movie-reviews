@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Star } from "lucide-react";
+import { Image } from "@heroui/image";
 
 interface ShowCardProps {
   id: string;
@@ -15,7 +16,9 @@ export const ShowCard = ({ id, title, rating, thumbnail }: ShowCardProps) => {
       to={`/show/${id}`}
     >
       <div className="relative aspect-[3/4] overflow-hidden">
-        <img
+        <Image
+          isBlurred
+          isZoomed
           alt={title}
           className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
           src={thumbnail}

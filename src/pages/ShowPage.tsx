@@ -1,16 +1,18 @@
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 // icons
-import { Star, PlusCircle } from "lucide-react";
+import { Star, PlusCircle, AlertCircle } from "lucide-react";
+// heroui components
 import { Button } from "@heroui/button";
 import { Modal, ModalBody, ModalContent, ModalHeader } from "@heroui/modal";
+import { Skeleton } from "@heroui/skeleton";
+import { Image } from "@heroui/image";
 
 // hooks
 import { useGetShow } from "@/hooks/useGetShow";
 // components
 import { ReviewList } from "@/components/ReviewList";
 import { ReviewForm } from "@/components/ReviewForm";
-import { LoadingFallback } from "@/components/LoadingFallback";
 
 const ShowPage = () => {
   const { showId } = useParams();
@@ -20,13 +22,14 @@ const ShowPage = () => {
   const handleAddReviewClick = () => setAddReviewOpen(true);
   const handleClose = () => setAddReviewOpen(false);
 
-  if (isLoading) return <LoadingFallback />;
+  if (isLoading) return <ShowSkeleton />;
 
   if (isError || !data)
     return (
-      <p className="text-center text-red-600 dark:text-red-400">
-        Show not found
-      </p>
+      <div className="flex flex-col items-center justify-center py-20 text-red-600 dark:text-red-400">
+        <AlertCircle className="mb-4" size={48} />
+        <span className="text-lg font-medium">Show not found</span>
+      </div>
     );
 
   const { title, description, thumbnail_src, tmdb_rating, reviews } = data;
@@ -35,9 +38,11 @@ const ShowPage = () => {
     <div className="container mx-auto px-4 py-4 space-y-10 text-gray-800 dark:text-gray-100 transition-colors">
       {/* --- Show Header Section --- */}
       <div className="flex flex-col md:flex-row gap-6">
-        <img
+        <Image
+          isBlurred
+          isZoomed
           alt={title}
-          className="w-3/4 md:w-1/3 lg:w-1/4 rounded-2xl shadow-lg dark:shadow-gray-900/40 object-cover mx-auto"
+          className="w-full max-w-md md:max-w-sm lg:max-w-xs rounded-2xl shadow-lg dark:shadow-gray-900/40 object-cover mx-auto aspect-[3/4]"
           src={thumbnail_src}
         />
 
@@ -112,5 +117,27 @@ const ShowPage = () => {
     </div>
   );
 };
+
+const ShowSkeleton = () => (
+  <div className="container mx-auto px-4 py-8 space-y-10">
+    <div className="flex flex-col md:flex-row gap-6">
+      <Skeleton className="h-96 rounded-2xl w-full max-w-md md:max-w-sm lg:max-w-xs rounded-2xl mx-auto" />
+      <div className="flex-1 space-y-4">
+        <Skeleton className="h-8 w-1/2 rounded" />
+        <Skeleton className="h-4 w-1/4 rounded" />
+        <Skeleton className="h-20 w-full rounded" />
+      </div>
+    </div>
+
+    <div className="space-y-4">
+      <Skeleton className="h-6 w-1/4 rounded" />
+      <div className="space-y-6 md:grid-cols-2 lg:grid-cols-2 grid gap-6">
+        {Array.from({ length: 2 }).map((_, i) => (
+          <Skeleton key={i} className="h-48 rounded-xl" />
+        ))}
+      </div>
+    </div>
+  </div>
+);
 
 export default ShowPage;

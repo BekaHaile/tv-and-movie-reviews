@@ -8,6 +8,7 @@ import { routes } from "./config/routes";
 import Layout from "@/layouts/Layout";
 // fallback UI
 import { LoadingFallback } from "@/components/LoadingFallback";
+import { CategorySkeleton } from "@/components/CategorySkeleton";
 
 // --- Lazy-loaded pages ---
 const HomePage = lazy(() => import("@/pages/HomePage"));
@@ -23,7 +24,14 @@ function App() {
     <Suspense fallback={<LoadingFallback />}>
       <Routes>
         <Route element={<Layout />}>
-          <Route element={<HomePage />} path={routes.home} />
+          <Route
+            element={
+              <Suspense fallback={<CategorySkeleton />}>
+                <HomePage />
+              </Suspense>
+            }
+            path={routes.home}
+          />
           <Route element={<CategoryCollectionPage />} path={routes.category} />
           <Route element={<ShowPage />} path={routes.show} />
           <Route element={<AboutPage />} path={routes.about} />
