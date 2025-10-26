@@ -15,7 +15,7 @@ import { Image } from "@heroui/image";
 import { useLocation } from "react-router-dom";
 
 // components
-import { SearchBar } from "./SearchInput";
+import { SearchBar } from "./SearchBar";
 
 // images
 import logoImage from "@/assets/el-logo.png";
