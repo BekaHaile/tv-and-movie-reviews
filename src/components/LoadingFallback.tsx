@@ -2,7 +2,7 @@ import { Spinner } from "@heroui/spinner";
 import { Image } from "@heroui/image";
 
 // images
-import logoImage from "../../public/el-logo.png";
+import logoImage from "@/assets/el-logo.png";
 
 export const LoadingFallback = () => (
   <div className="flex flex-col justify-center items-center min-h-screen gap-4">

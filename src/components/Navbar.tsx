@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Link } from "@heroui/link";
 import {
   Navbar as HeroUINavbar,
@@ -12,13 +12,13 @@ import {
 import { link as linkStyles } from "@heroui/theme";
 import clsx from "clsx";
 import { Image } from "@heroui/image";
-
-// images
-import logoImage from "../../public/el-logo.png";
+import { useLocation } from "react-router-dom";
 
 // components
 import { SearchBar } from "./SearchInput";
 
+// images
+import logoImage from "@/assets/el-logo.png";
 // routes
 import { siteConfig } from "@/config/routes";
 import { ThemeSwitch } from "@/components/ThemeSwitch";
@@ -29,6 +29,22 @@ export const Navbar = () => {
   const handleMenuLinkClick = () => {
     setIsMenuOpen(false);
   };
+
+  // Display the SearchBar only on / and /category routes
+  const [showSearchBar, setShowSearchBar] = useState(false);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    if (
+      location.pathname === "/" ||
+      location.pathname.startsWith("/category")
+    ) {
+      setShowSearchBar(true);
+    } else {
+      setShowSearchBar(false);
+    }
+  }, [location.pathname]);
 
   return (
     <Fragment>
@@ -76,7 +92,9 @@ export const Navbar = () => {
           <NavbarItem className="hidden lg:flex gap-2">
             <ThemeSwitch />
           </NavbarItem>
-          <NavbarItem className="hidden lg:flex">{<SearchBar />}</NavbarItem>
+          {showSearchBar && (
+            <NavbarItem className="hidden lg:flex">{<SearchBar />}</NavbarItem>
+          )}
         </NavbarContent>
 
         <NavbarContent className="lg:hidden basis-1 pl-4" justify="end">
@@ -106,7 +124,9 @@ export const Navbar = () => {
           </div>
         </NavbarMenu>
       </HeroUINavbar>
-      <div className="lg:hidden px-4 pb-2">{<SearchBar />}</div>
+      {showSearchBar && (
+        <div className="lg:hidden px-4 pb-2">{<SearchBar />}</div>
+      )}
     </Fragment>
   );
 };
