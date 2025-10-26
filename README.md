@@ -1,50 +1,110 @@
-# Vite & HeroUI Template
+# 🎬 Elantil TV & Movies Review Assignment
 
-This is a template for creating applications using Vite and HeroUI (v2).
+> **Assignment built for Elantil by Beka Tola**
 
-[Try it on CodeSandbox](https://githubbox.com/heroui-inc/vite-template)
+🌐 **Live Demo:** [tv-movie-reviews-laul.vercel.app](https://tv-movie-reviews-laul.vercel.app)
 
-## Technologies Used
+This project demonstrates a modern TV & Movies review platform as part of a technical assessment. It features reviews, ratings, filtering, and more.
 
-- [Vite](https://vitejs.dev/guide/)
-- [HeroUI](https://heroui.com)
-- [Tailwind CSS](https://tailwindcss.com)
-- [Tailwind Variants](https://tailwind-variants.org)
-- [TypeScript](https://www.typescriptlang.org)
-- [Framer Motion](https://www.framer.com/motion)
+---
 
-## How to Use
+## 🚀 Technologies Used
 
-To clone the project, run the following command:
+- ⚡ **Vite**
+- 🎨 **HeroUI**
+- 💨 **Tailwind CSS**
+- 🧩 **Tailwind Variants**
+- 🖼️ **Lucide Icons**
+- 🟦 **TypeScript**
+- 🎥 **Framer Motion**
+- 🔄 **Tanstack Query**
 
-```bash
-git clone https://github.com/heroui-inc/vite-template.git
+---
+
+## ▶️ How to Run
+
+1. **Clone the project:**
+   ```bash
+   git clone https://github.com/BekaHaile/tv-and-movie-reviews.git
+   cd tv-and-movie-reviews
+   ```
+2. **Install dependencies (using pnpm):**
+   ```bash
+   pnpm install
+   ```
+3. **Run the development server:**
+   ```bash
+   pnpm run dev
+   ```
+4. **Run tests:**
+   ```bash
+   pnpm test
+   ```
+
+---
+
+## 📁 Folder Structure
+
+```
+tv-and-movie-reviews/
+├── public/
+├── src/
+│   ├── api/         # API calls
+│   ├── components/  # UI components & icons
+│   ├── config/      # Config files
+│   ├── hooks/       # Custom hooks
+│   ├── layouts/     # Layout components
+│   ├── pages/       # Page components
+│   ├── styles/      # Global styles
+│   ├── types/       # TypeScript types
+│   └── _tests/      # Unit & integration tests
+├── .env
+├── package.json
+├── pnpm-lock.yaml
+├── README.md
+└── ...
 ```
 
-### Install dependencies
+---
 
-You can use one of them `npm`, `yarn`, `pnpm`, `bun`, Example using `npm`:
+## 🧪 Tests
 
-```bash
-npm install
-```
-
-### Run the development server
+Unit and integration tests are located in the `src/_tests/` folder. Run all tests with:
 
 ```bash
-npm run dev
+pnpm test
 ```
 
-### Setup pnpm (optional)
+---
 
-If you are using `pnpm`, you need to add the following code to your `.npmrc` file:
+## 🔗 Backend Connection
+
+This app is connected to a [Directus](https://directus.io/) backend for data management. The API base URL is configured in the `.env` file: (This is usually not committed to version control)
+
+```env
+VITE_API_BASE_URL=https://elantil-fe-task.directus.app
+```
+
+---
+
+## 📦 Package Manager
+
+This project uses [pnpm](https://pnpm.io/) for fast, efficient dependency management. If you don't have pnpm installed, run:
 
 ```bash
-public-hoist-pattern[]=*@heroui/*
+npm install -g pnpm
 ```
 
-After modifying the `.npmrc` file, you need to run `pnpm install` again to ensure that the dependencies are installed correctly.
+---
+
+## 🌐 Deployment
+
+This app is deployed via [Vercel](https://vercel.com/) at:
+
+**https://tv-movie-reviews-laul.vercel.app**
+
+---
 
 ## License
 
-Licensed under the [MIT license](https://github.com/heroui-inc/vite-template/blob/main/LICENSE).
+Licensed under the [MIT license](LICENSE).
