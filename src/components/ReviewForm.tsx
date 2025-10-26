@@ -1,5 +1,7 @@
 import { useState } from "react";
+// heroui components
 import { Button } from "@heroui/button";
+import { addToast } from "@heroui/toast";
 
 // hooks
 import { useCreateReview } from "@/hooks/useAddReview";
@@ -23,11 +25,35 @@ export const ReviewForm = ({ showId, onSuccess }: ReviewFormProps) => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    mutate({ ...form, rating: Number(form.rating), show_id: showId });
+  const onSuccessAction = () => {
+    // Show a success toast and reset form
     setForm({ name: "", title: "", review: "", rating: 0 });
+    addToast({
+      title: "Review submitted",
+      description: "Your review has been submitted successfully.",
+      color: "success",
+    });
     onSuccess();
+  };
+
+  const onErrorAction = () => {
+    addToast({
+      title: "Submission failed",
+      description:
+        "There was an error submitting your review. Please try again.",
+      color: "danger",
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    mutate(
+      { ...form, rating: Number(form.rating), show_id: showId },
+      {
+        onSuccess: onSuccessAction,
+        onError: onErrorAction,
+      },
+    );
   };
 
   return (
