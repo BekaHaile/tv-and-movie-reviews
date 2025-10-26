@@ -13,7 +13,7 @@ interface Props {
   slug?: string;
 }
 
-export const CategoryCollectionPage = ({ slug }: Props) => {
+const CategoryCollectionPage = ({ slug }: Props) => {
   const { categorySlug } = useParams();
   const finalSlug = slug || categorySlug!;
 
@@ -69,3 +69,5 @@ export const CategoryCollectionPage = ({ slug }: Props) => {
     </div>
   );
 };
+
+export default CategoryCollectionPage;

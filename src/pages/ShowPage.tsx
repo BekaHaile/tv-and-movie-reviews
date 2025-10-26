@@ -12,7 +12,7 @@ import { ReviewList } from "@/components/ReviewList";
 import { ReviewForm } from "@/components/ReviewForm";
 import { LoadingFallback } from "@/components/LoadingFallback";
 
-export const ShowPage = () => {
+const ShowPage = () => {
   const { showId } = useParams();
   const { data, isLoading, isError } = useGetShow(showId!);
 
@@ -37,7 +37,7 @@ export const ShowPage = () => {
       <div className="flex flex-col md:flex-row gap-6">
         <img
           alt={title}
-          className="w-full md:w-1/3 rounded-2xl shadow-lg dark:shadow-gray-900/40 object-cover"
+          className="w-3/4 md:w-1/3 lg:w-1/4 rounded-2xl shadow-lg dark:shadow-gray-900/40 object-cover mx-auto"
           src={thumbnail_src}
         />
 
@@ -112,3 +112,5 @@ export const ShowPage = () => {
     </div>
   );
 };
+
+export default ShowPage;
