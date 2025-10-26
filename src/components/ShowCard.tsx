@@ -23,7 +23,7 @@ export const ShowCard = ({ id, title, rating, thumbnail }: ShowCardProps) => {
           className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
           src={thumbnail}
         />
-        <div className="absolute top-2 right-2 bg-black/70 text-white text-sm px-2 py-1 rounded-lg flex items-center gap-1">
+        <div className="absolute top-2 right-2 bg-black/70 text-white text-sm px-2 py-1 rounded-lg flex items-center gap-1 z-10">
           <Star className="w-3 h-3 text-yellow-400" />
           {rating.toFixed(1)}
         </div>

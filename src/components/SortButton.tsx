@@ -1,4 +1,4 @@
-import { ChevronDown, ArrowUpDown } from "lucide-react";
+import { ArrowUpDown } from "lucide-react";
 import {
   Dropdown,
   DropdownTrigger,
@@ -6,31 +6,41 @@ import {
   DropdownItem,
 } from "@heroui/dropdown";
 import { Button } from "@heroui/button";
+import clsx from "clsx";
 
 type SortButtonProps = {
   selected: string;
   onChange: (value: string) => void;
   sortOptions: { value: string; label: string }[];
+  disabled?: boolean;
 };
 
 export default function SortButton({
   selected,
   onChange,
   sortOptions,
+  disabled,
 }: SortButtonProps) {
-  const selectedLabel =
-    sortOptions.find((opt) => opt.value === selected)?.label || "Sort By";
+  const selectedLabel = sortOptions.find(
+    (opt) => opt.value === selected
+  )?.label;
 
   return (
     <Dropdown>
-      <DropdownTrigger>
+      <DropdownTrigger disabled={disabled}>
         <Button
-          className="flex items-center gap-2 text-sm md:text-base font-medium"
+          className={"flex items-center gap-2 text-sm md:text-base font-medium"}
           color="primary"
           endContent={<ArrowUpDown className="h-4 w-4 opacity-70" />}
+          isDisabled={disabled}
           variant="bordered"
         >
-          <span className="hidden sm:inline text-gray-700 dark:text-gray-300">
+          <span
+            className={clsx(
+              "hidden sm:inline text-gray-700 dark:text-gray-300 ",
+              { "text-gray-400 dark:text-gray-600": disabled }
+            )}
+          >
             Sort:
           </span>
           <span className="text-gray-900 dark:text-gray-100">

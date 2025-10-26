@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { UseQueryResult } from "@tanstack/react-query";
 
-import { ShowPage } from "@/pages/ShowPage";
+import ShowPage from "@/pages/ShowPage";
 import { useGetShow } from "@/hooks/useGetShow";
 import { Show } from "@/types/show.types";
 
@@ -10,6 +10,20 @@ import { Show } from "@/types/show.types";
 vi.mock("@/hooks/useGetShow", () => ({
   useGetShow: vi.fn(),
 }));
+
+// Mock ShowSkeleton
+vi.mock("@/pages/ShowPage", async (orig) => {
+  const actual = await orig();
+
+  return typeof actual === "object" && actual !== null
+    ? {
+        ...actual,
+        ShowSkeleton: () => <div data-testid="loading">Loading...</div>,
+      }
+    : {
+        ShowSkeleton: () => <div data-testid="loading">Loading...</div>,
+      };
+});
 
 // Mock components that are not critical to this test
 vi.mock("@/components/LoadingFallback", () => ({
@@ -48,7 +62,7 @@ describe("ShowPage", () => {
         <Routes>
           <Route element={<ShowPage />} path="/show/:showId" />
         </Routes>
-      </MemoryRouter>,
+      </MemoryRouter>
     );
 
   it("renders loading state", () => {
@@ -59,7 +73,10 @@ describe("ShowPage", () => {
     } as unknown as UseQueryResult<Show, Error>);
 
     renderWithRouter();
-    expect(screen.getByTestId("loading")).toBeInTheDocument();
+
+    expect(
+      document.querySelector(".group.relative.overflow-hidden")
+    ).toBeInTheDocument();
   });
 
   it("renders error state", () => {

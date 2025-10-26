@@ -85,6 +85,7 @@ const ShowPage = () => {
             </h2>
             <div className="flex items-center gap-4">
               <SortButton
+                disabled={!(reviews && reviews.length > 0)}
                 selected={filters.sortBy || "date"}
                 sortOptions={sortOptions}
                 onChange={handleSortChange}

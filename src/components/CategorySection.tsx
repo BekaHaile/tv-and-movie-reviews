@@ -1,4 +1,4 @@
-import { titleClass } from "@/components/primitives";
+import { titleClass } from "@/styles/primitives";
 // Show card component
 import { ShowCard } from "@/components/ShowCard";
 
