@@ -1,9 +1,13 @@
 import { useState } from "react";
-// heroui components
+// Hero UI
 import { Button } from "@heroui/button";
+import { Input } from "@heroui/input";
+import { Textarea } from "@heroui/input";
 import { addToast } from "@heroui/toast";
+// Icons
+import { Star } from "lucide-react";
 
-// hooks
+// Hooks
 import { useCreateReview } from "@/hooks/useAddReview";
 
 type ReviewFormProps = {
@@ -20,13 +24,17 @@ export const ReviewForm = ({ showId, onSuccess }: ReviewFormProps) => {
   });
 
   const { mutate, isPending } = useCreateReview(showId);
+  const [hovered, setHovered] = useState<number | null>(null);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => setForm({ ...form, [e.target.name]: e.target.value });
 
+  const handleRatingClick = (value: number) => {
+    setForm((prev) => ({ ...prev, rating: value }));
+  };
+
   const onSuccessAction = () => {
-    // Show a success toast and reset form
     setForm({ name: "", title: "", review: "", rating: 0 });
     addToast({
       title: "Review submitted",
@@ -45,78 +53,103 @@ export const ReviewForm = ({ showId, onSuccess }: ReviewFormProps) => {
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     mutate(
       { ...form, rating: Number(form.rating), show_id: showId },
-      {
-        onSuccess: onSuccessAction,
-        onError: onErrorAction,
-      },
+      { onSuccess: onSuccessAction, onError: onErrorAction }
     );
   };
 
   return (
     <form
-      className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 space-y-4 shadow-md dark:shadow-gray-900/40 transition-colors"
+      className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 space-y-6 shadow-md dark:shadow-gray-900/40 transition-colors"
       onSubmit={handleSubmit}
     >
+      {/* ---- Form Title ---- */}
       <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
         Leave a Review
       </h3>
 
+      {/* ---- Rating Stars ---- */}
+      <div className="flex flex-col items-center gap-2">
+        <span className="text-sm text-gray-600 dark:text-gray-400">
+          Your Rating
+        </span>
+        <div className="flex gap-1">
+          {[1, 2, 3, 4, 5].map((value) => (
+            <button
+              key={value}
+              aria-label={`Rate ${value} stars`}
+              className="transition-transform hover:scale-110"
+              type="button"
+              onClick={() => handleRatingClick(value)}
+              onMouseEnter={() => setHovered(value)}
+              onMouseLeave={() => setHovered(null)}
+            >
+              <Star
+                className={`w-7 h-7 transition-colors ${
+                  value <= (hovered ?? form.rating)
+                    ? "fill-yellow-400 stroke-yellow-400"
+                    : "stroke-gray-400 dark:stroke-gray-500"
+                }`}
+              />
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* ---- Input Fields ---- */}
       <div className="flex flex-col gap-4">
-        <input
+        <Input
           required
-          className="w-full p-2 rounded border border-gray-300 dark:border-gray-700
-        bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100"
+          classNames={{
+            inputWrapper:
+              "bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700",
+            input: "text-gray-800 dark:text-gray-100",
+          }}
+          label="Your Name"
           name="name"
-          placeholder="Your name"
+          placeholder="Enter your name"
           value={form.name}
           onChange={handleChange}
         />
-        <input
+
+        <Input
           required
-          className="w-full p-2 rounded border border-gray-300 dark:border-gray-700
-        bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100"
+          classNames={{
+            inputWrapper:
+              "bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700",
+            input: "text-gray-800 dark:text-gray-100",
+          }}
+          label="Review Title"
           name="title"
-          placeholder="Review title"
+          placeholder="Give your review a title"
           value={form.title}
           onChange={handleChange}
         />
-        <textarea
+
+        <Textarea
           required
-          className="w-full p-2 rounded border border-gray-300 dark:border-gray-700
-        bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 min-h-[120px]"
+          classNames={{
+            inputWrapper:
+              "bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700",
+            input: "text-gray-800 dark:text-gray-100",
+          }}
+          label="Your Review"
+          minRows={4}
           name="review"
           placeholder="Write your review..."
           value={form.review}
           onChange={handleChange}
         />
-        <label
-          className="block text-sm text-gray-600 dark:text-gray-400"
-          htmlFor="rating"
-        >
-          Rating (1–5):
-        </label>
-        <input
-          required
-          className="w-20 p-2 rounded border border-gray-300 dark:border-gray-700
-        bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100"
-          id="rating"
-          max="5"
-          min="1"
-          name="rating"
-          type="number"
-          value={form.rating}
-          onChange={handleChange}
-        />
       </div>
 
+      {/* ---- Submit Button ---- */}
       <Button
-        className="primary transition-colors mx-auto block gap-2"
+        className="w-full sm:w-auto mx-auto block"
         color="primary"
-        disabled={isPending}
+        disabled={isPending || form.rating === 0}
         isLoading={isPending}
         type="submit"
       >
