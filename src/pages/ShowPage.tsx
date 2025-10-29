@@ -69,7 +69,7 @@ const ShowPage = () => {
 
           <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
             <Star className="w-5 h-5 text-yellow-500 dark:text-yellow-400" />
-            {tmdb_rating}/5
+            {tmdb_rating}/10
           </div>
 
           <p className="text-gray-700 dark:text-gray-300">{description}</p>

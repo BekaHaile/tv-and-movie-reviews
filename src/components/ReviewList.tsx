@@ -50,7 +50,7 @@ export const ReviewList = ({ reviews }: { reviews: Review[] }) => {
             <div className="flex items-center gap-1">
               <Star className="w-4 h-4 text-yellow-500 dark:text-yellow-400" />
               <span className="text-sm text-gray-700 dark:text-gray-300">
-                {r.rating}/5
+                {r.rating}/10
               </span>
             </div>
           </div>

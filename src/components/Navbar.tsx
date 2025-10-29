@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { Link } from "@heroui/link";
 import {
   Navbar as HeroUINavbar,
@@ -30,21 +30,15 @@ export const Navbar = () => {
     setIsMenuOpen(false);
   };
 
-  // Display the SearchBar only on / and /category routes
-  const [showSearchBar, setShowSearchBar] = useState(false);
-
+  
   const location = useLocation();
-
-  useEffect(() => {
-    if (
-      location.pathname === "/" ||
-      location.pathname.startsWith("/category")
-    ) {
-      setShowSearchBar(true);
-    } else {
-      setShowSearchBar(false);
-    }
-  }, [location.pathname]);
+  
+  // Display the SearchBar only on / and /category routes
+  const showSearchBar = useMemo(
+    () =>
+      location.pathname === "/" || location.pathname.startsWith("/category"),
+    [location.pathname]
+  );
 
   return (
     <Fragment>
